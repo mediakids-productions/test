@@ -1,69 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Status Tracker - MediaKids Academy</title>
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
     <style>
         /* ==========================================
-           CSS VARIABLES
+           CSS VARIABLES - Apple Design System
            ========================================== */
         :root {
             /* Apple System Colors */
-            --system-blue: #007AFF;
-            --system-blue-light: #5AC8FA;
-            --system-green: #34C759;
-            --system-orange: #FF9500;
-            --system-red: #FF3B30;
-            --system-purple: #AF52DE;
-            --system-pink: #FF2D55;
-            --system-yellow: #FFCC00;
-            --system-teal: #5AC8FA;
-            
-            /* Pastel Colors */
-            --pastel-blue: #4A9EF7;
-            --pastel-green: #2ECC71;
-            --pastel-orange: #F5A623;
-            --pastel-purple: #9B59B6;
-            --pastel-pink: #FF6B9D;
-            --pastel-teal: #1ABC9C;
-            --pastel-red: #FF6B6B;
-            --pastel-cyan: #64D2FF;
-            
-            /* Liquid Glass */
+            --apple-blue: #007AFF;
+            --apple-blue-light: #5AC8FA;
+            --apple-green: #34C759;
+            --apple-orange: #FF9500;
+            --apple-red: #FF3B30;
+            --apple-purple: #AF52DE;
+            --apple-pink: #FF2D55;
+            --apple-yellow: #FFCC00;
+            --apple-teal: #5AC8FA;
+            --apple-cyan: #32ADE6;
+            --apple-indigo: #5856D6;
+
+            /* Liquid Glass - exact original */
             --glass-bg: linear-gradient(135deg,
-                rgba(255, 255, 255, 0.6) 0%,
-                rgba(255, 255, 255, 0.3) 50%,
-                rgba(255, 255, 255, 0.5) 100%);
+                    rgba(255, 255, 255, 0.6) 0%,
+                    rgba(255, 255, 255, 0.3) 50%,
+                    rgba(255, 255, 255, 0.5) 100%);
             --glass-bg-hover: linear-gradient(135deg,
-                rgba(255, 255, 255, 0.75) 0%,
-                rgba(255, 255, 255, 0.5) 50%,
-                rgba(255, 255, 255, 0.65) 100%);
+                    rgba(255, 255, 255, 0.75) 0%,
+                    rgba(255, 255, 255, 0.5) 50%,
+                    rgba(255, 255, 255, 0.65) 100%);
             --glass-border: rgba(255, 255, 255, 0.6);
             --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            
+            --glass-shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.12);
+            --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+            --glass-blur: blur(20px) saturate(180%);
+
             /* Text */
             --text-primary: #1d1d1f;
             --text-secondary: #6b7280;
             --text-tertiary: #9ca3af;
-            
-            /* Border Radius */
-            --radius-sm: 12px;
-            --radius-md: 18px;
-            --radius-lg: 28px;
-            --radius-pill: 100px;
+
+            /* Radius */
+            --r-sm: 12px;
+            --r-md: 18px;
+            --r-lg: 28px;
+            --r-xl: 28px;
+            --r-pill: 100px;
         }
 
         /* ==========================================
            RESET & BASE
            ========================================== */
-        * {
+        *,
+        *::before,
+        *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -76,12 +77,13 @@
             color: var(--text-primary);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* ==========================================
-           ANIMATED BACKGROUND
+           ANIMATED BACKGROUND ORBS
            ========================================== */
-        .bg-animation {
+        .bg-orbs {
             position: fixed;
             inset: 0;
             z-index: 0;
@@ -89,15 +91,15 @@
             pointer-events: none;
         }
 
-        .blob {
+        .orb {
             position: absolute;
             border-radius: 50%;
             filter: blur(60px);
             mix-blend-mode: multiply;
-            animation: blobFloat 12s ease-in-out infinite;
+            animation: orbDrift 12s ease-in-out infinite;
         }
 
-        .blob-1 {
+        .orb-1 {
             width: 600px;
             height: 600px;
             background: linear-gradient(135deg, rgba(0, 122, 255, 0.4), rgba(90, 200, 250, 0.3));
@@ -105,7 +107,7 @@
             right: -100px;
         }
 
-        .blob-2 {
+        .orb-2 {
             width: 500px;
             height: 500px;
             background: linear-gradient(135deg, rgba(50, 173, 230, 0.4), rgba(0, 122, 255, 0.3));
@@ -114,7 +116,7 @@
             animation-delay: -4s;
         }
 
-        .blob-3 {
+        .orb-3 {
             width: 400px;
             height: 400px;
             background: linear-gradient(135deg, rgba(90, 200, 250, 0.3), rgba(0, 122, 255, 0.25));
@@ -123,10 +125,20 @@
             animation-delay: -8s;
         }
 
-        @keyframes blobFloat {
-            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            33% { transform: translate(30px, -30px) scale(1.05) rotate(5deg); }
-            66% { transform: translate(-20px, 20px) scale(0.95) rotate(-5deg); }
+        @keyframes orbDrift {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+
+            33% {
+                transform: translate(30px, -30px) scale(1.05) rotate(5deg);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.95) rotate(-5deg);
+            }
         }
 
         /* ==========================================
@@ -139,7 +151,7 @@
         }
 
         /* ==========================================
-           SEARCH SECTION - CENTERED
+           SEARCH SECTION
            ========================================== */
         .search-section {
             min-height: 100vh;
@@ -149,17 +161,40 @@
             align-items: center;
             padding: 24px;
             text-align: center;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .search-section.has-results {
+        .search-section.compact {
             min-height: auto;
-            padding: 60px 24px 40px;
+            padding: 48px 24px 32px;
         }
 
-        /* Gradient Title */
+        /* Logo */
+        .logo-mark {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--apple-blue), var(--apple-blue-light));
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 30px rgba(0, 122, 255, 0.35);
+            animation: fadeUp 0.7s ease forwards;
+            opacity: 0;
+        }
+
+        .logo-mark svg {
+            width: 36px;
+            height: 36px;
+            color: white;
+        }
+
+        /* Title */
         .search-title {
             font-size: clamp(2.5rem, 8vw, 5rem);
             font-weight: 800;
+            letter-spacing: -0.02em;
             line-height: 1;
             margin-bottom: 16px;
             background: linear-gradient(135deg, #1d1d1f 0%, #007AFF 50%, #5AC8FA 100%);
@@ -167,18 +202,20 @@
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: fadeSlideUp 0.8s ease forwards, gradientShift 6s ease infinite;
+            animation: fadeUp 0.8s ease forwards, shimmer 6s ease infinite;
             opacity: 0;
         }
 
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% center; }
-            50% { background-position: 100% center; }
-        }
+        @keyframes shimmer {
 
-        @keyframes fadeSlideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
+            0%,
+            100% {
+                background-position: 0% center;
+            }
+
+            50% {
+                background-position: 100% center;
+            }
         }
 
         .search-subtitle {
@@ -186,11 +223,23 @@
             color: var(--text-secondary);
             font-weight: 500;
             margin-bottom: 40px;
-            animation: fadeSlideUp 0.8s ease 0.2s forwards;
+            animation: fadeUp 0.8s ease 0.2s forwards;
             opacity: 0;
         }
 
-        /* Search Box - Liquid Glass */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Search Box - Liquid Glass (original) */
         .search-box {
             display: flex;
             gap: 10px;
@@ -198,15 +247,12 @@
             max-width: 520px;
             padding: 10px;
             background: var(--glass-bg);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-radius: var(--radius-lg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: var(--r-lg);
             border: 1px solid var(--glass-border);
-            box-shadow: 
-                var(--glass-shadow),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.05);
-            animation: fadeSlideUp 0.8s ease 0.4s forwards;
+            box-shadow: var(--glass-shadow), var(--glass-inset);
+            animation: fadeUp 0.8s ease 0.4s forwards;
             opacity: 0;
         }
 
@@ -214,7 +260,7 @@
             flex: 1;
             background: rgba(255, 255, 255, 0.7);
             border: none;
-            border-radius: var(--radius-md);
+            border-radius: var(--r-md);
             padding: 18px 24px;
             font-size: 1rem;
             font-family: inherit;
@@ -233,10 +279,10 @@
         }
 
         .search-btn {
-            background: linear-gradient(135deg, var(--system-blue), var(--system-blue-light));
+            background: linear-gradient(135deg, var(--apple-blue), var(--apple-blue-light));
             color: white;
             border: none;
-            border-radius: var(--radius-md);
+            border-radius: var(--r-md);
             padding: 18px 32px;
             font-size: 1rem;
             font-weight: 600;
@@ -247,6 +293,7 @@
             gap: 10px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 122, 255, 0.35);
+            white-space: nowrap;
         }
 
         .search-btn:hover {
@@ -274,20 +321,29 @@
 
         .loading.active {
             display: block;
+            animation: fadeUp 0.4s ease;
         }
 
-        .spinner {
+        .spinner-wrap {
             width: 44px;
             height: 44px;
+            margin: 0 auto 16px;
+            position: relative;
+        }
+
+        .spinner-ring {
+            width: 100%;
+            height: 100%;
             border: 3px solid rgba(0, 122, 255, 0.2);
-            border-top-color: var(--system-blue);
+            border-top-color: var(--apple-blue);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-            margin: 0 auto 16px;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .loading p {
@@ -306,22 +362,22 @@
 
         .error-message.active {
             display: block;
-            animation: fadeSlideUp 0.5s ease;
+            animation: fadeUp 0.5s ease;
         }
 
         .error-icon {
             width: 80px;
             height: 80px;
             background: linear-gradient(135deg,
-                rgba(255, 255, 255, 0.7),
-                rgba(255, 255, 255, 0.4));
+                    rgba(255, 255, 255, 0.7),
+                    rgba(255, 255, 255, 0.4));
             backdrop-filter: blur(20px);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
-            color: var(--system-red);
+            color: var(--apple-red);
             border: 1px solid var(--glass-border);
         }
 
@@ -337,6 +393,29 @@
             font-size: 1rem;
         }
 
+        .retry-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--r-pill);
+            font-family: inherit;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--apple-blue);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            background: var(--glass-bg-hover);
+            transform: translateY(-2px);
+        }
+
         /* ==========================================
            RESULTS SECTION
            ========================================== */
@@ -349,15 +428,14 @@
 
         .results-section.active {
             display: block;
-            animation: fadeSlideUp 0.6s ease;
         }
 
         /* ==========================================
-           TEACHER CARD
+           TEACHER HERO CARD
            ========================================== */
-        .teacher-card {
-            background: linear-gradient(135deg, var(--system-blue), #5856D6);
-            border-radius: var(--radius-lg);
+        .teacher-hero {
+            background: linear-gradient(135deg, var(--apple-blue) 0%, var(--apple-indigo) 100%);
+            border-radius: var(--r-lg);
             padding: 28px 32px;
             color: white;
             margin-bottom: 28px;
@@ -365,9 +443,36 @@
             align-items: center;
             gap: 24px;
             box-shadow: 0 12px 40px rgba(0, 122, 255, 0.3);
+            animation: fadeUp 0.6s ease forwards;
+            opacity: 0;
+            position: relative;
+            overflow: hidden;
         }
 
-        .teacher-avatar {
+        /* Subtle glass highlight on hero */
+        .teacher-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .teacher-hero::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 70%);
+            top: -100px;
+            right: -50px;
+            pointer-events: none;
+        }
+
+        .avatar {
             width: 72px;
             height: 72px;
             background: rgba(255, 255, 255, 0.2);
@@ -378,9 +483,17 @@
             font-size: 28px;
             font-weight: 700;
             flex-shrink: 0;
+            position: relative;
+            z-index: 1;
         }
 
-        .teacher-info h2 {
+        .teacher-details {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .teacher-details h2 {
             font-size: 1.75rem;
             font-weight: 700;
             margin-bottom: 4px;
@@ -392,25 +505,78 @@
             margin-bottom: 14px;
         }
 
-        .teacher-tags {
+        .meta-tags {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
 
-        .teacher-tag {
+        .meta-tag {
             background: rgba(255, 255, 255, 0.2);
             padding: 8px 16px;
-            border-radius: var(--radius-pill);
+            border-radius: var(--r-pill);
             font-size: 0.875rem;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .teacher-tag svg {
+        .meta-tag svg {
             width: 14px;
             height: 14px;
+        }
+
+        /* Progress ring in hero */
+        .progress-ring-wrap {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .progress-ring-container {
+            width: 76px;
+            height: 76px;
+            position: relative;
+        }
+
+        .progress-ring-container svg {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.15);
+            stroke-width: 5;
+        }
+
+        .progress-ring-fill {
+            fill: none;
+            stroke: white;
+            stroke-width: 5;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .progress-ring-text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .progress-ring-label {
+            font-size: 0.6875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            opacity: 0.7;
+            font-weight: 600;
         }
 
         /* ==========================================
@@ -422,82 +588,73 @@
             gap: 20px;
         }
 
-        /* Card Sizes */
-        .card-large { grid-column: span 2; grid-row: span 2; }
-        .card-medium { grid-column: span 1; grid-row: span 2; }
-        .card-small { grid-column: span 1; grid-row: span 1; }
-
-        @media (max-width: 1024px) {
-            .bento-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .card-large { grid-column: span 2; }
-            .card-medium { grid-column: span 1; }
-        }
-
-        @media (max-width: 640px) {
-            .bento-grid {
-                grid-template-columns: 1fr;
-            }
-            .card-large,
-            .card-medium,
-            .card-small {
-                grid-column: span 1;
-                grid-row: span 1;
-            }
-
-            .search-box {
-                flex-direction: column;
-            }
-
-            .teacher-card {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .teacher-tags {
-                justify-content: center;
-            }
+        .card-wide {
+            grid-column: span 2;
         }
 
         /* ==========================================
-           LIQUID GLASS CARD
+           GLASS CARD
            ========================================== */
         .glass-card {
             position: relative;
             background: var(--glass-bg);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-radius: var(--radius-lg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: var(--r-lg);
             padding: 24px;
             overflow: hidden;
             border: 1px solid var(--glass-border);
-            box-shadow: 
-                var(--glass-shadow),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.05);
-            
+            box-shadow: var(--glass-shadow), var(--glass-inset);
+
+            display: flex;
+            flex-direction: column;
+
             opacity: 0;
             transform: translateY(30px);
-            animation: cardReveal 0.6s ease forwards;
-            
+            animation: cardIn 0.6s ease forwards;
             transition: all 0.4s ease;
         }
 
-        .glass-card:nth-child(1) { animation-delay: 0.1s; }
-        .glass-card:nth-child(2) { animation-delay: 0.15s; }
-        .glass-card:nth-child(3) { animation-delay: 0.2s; }
-        .glass-card:nth-child(4) { animation-delay: 0.25s; }
-        .glass-card:nth-child(5) { animation-delay: 0.3s; }
-        .glass-card:nth-child(6) { animation-delay: 0.35s; }
-        .glass-card:nth-child(7) { animation-delay: 0.4s; }
-        .glass-card:nth-child(8) { animation-delay: 0.45s; }
-
-        @keyframes cardReveal {
-            to { opacity: 1; transform: translateY(0); }
+        .glass-card:nth-child(1) {
+            animation-delay: 0.05s;
         }
 
-        /* Glass highlight */
+        .glass-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .glass-card:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+
+        .glass-card:nth-child(4) {
+            animation-delay: 0.2s;
+        }
+
+        .glass-card:nth-child(5) {
+            animation-delay: 0.25s;
+        }
+
+        .glass-card:nth-child(6) {
+            animation-delay: 0.3s;
+        }
+
+        .glass-card:nth-child(7) {
+            animation-delay: 0.35s;
+        }
+
+        .glass-card:nth-child(8) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes cardIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Glass specular highlight */
         .glass-card::before {
             content: '';
             position: absolute;
@@ -506,25 +663,23 @@
             right: 0;
             height: 50%;
             background: linear-gradient(180deg,
-                rgba(255, 255, 255, 0.3) 0%,
-                rgba(255, 255, 255, 0.1) 50%,
-                transparent 100%);
+                    rgba(255, 255, 255, 0.3) 0%,
+                    rgba(255, 255, 255, 0.1) 50%,
+                    transparent 100%);
             pointer-events: none;
-            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            border-radius: var(--r-lg) var(--r-lg) 0 0;
         }
 
         .glass-card:hover {
             transform: translateY(-8px);
-            box-shadow: 
+            box-shadow:
                 0 20px 50px rgba(0, 0, 0, 0.12),
                 inset 0 1px 0 rgba(255, 255, 255, 1);
             background: var(--glass-bg-hover);
         }
 
-        /* ==========================================
-           CARD CONTENT
-           ========================================== */
-        .card-header {
+        /* Card header */
+        .card-head {
             display: flex;
             align-items: center;
             gap: 12px;
@@ -533,32 +688,54 @@
             z-index: 1;
         }
 
-        .card-icon {
+        .card-ico {
             width: 40px;
             height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: var(--radius-sm);
+            border-radius: var(--r-sm);
             color: white;
             flex-shrink: 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        .card-icon svg {
+        .card-ico svg {
             width: 20px;
             height: 20px;
-            stroke-width: 2;
         }
 
-        .card-icon.blue { background: linear-gradient(135deg, #007AFF, #5AC8FA); }
-        .card-icon.green { background: linear-gradient(135deg, #34C759, #30DB5B); }
-        .card-icon.orange { background: linear-gradient(135deg, #FF9500, #FFB340); }
-        .card-icon.red { background: linear-gradient(135deg, #FF3B30, #FF6B6B); }
-        .card-icon.purple { background: linear-gradient(135deg, #AF52DE, #BF5AF2); }
-        .card-icon.teal { background: linear-gradient(135deg, #5AC8FA, #64D2FF); }
-        .card-icon.pink { background: linear-gradient(135deg, #FF2D55, #FF6B9D); }
-        .card-icon.cyan { background: linear-gradient(135deg, #32ADE6, #5AC8FA); }
+        .ico-blue {
+            background: linear-gradient(135deg, #007AFF, #5AC8FA);
+        }
+
+        .ico-green {
+            background: linear-gradient(135deg, #34C759, #30DB5B);
+        }
+
+        .ico-orange {
+            background: linear-gradient(135deg, #FF9500, #FFB340);
+        }
+
+        .ico-red {
+            background: linear-gradient(135deg, #FF3B30, #FF6B6B);
+        }
+
+        .ico-purple {
+            background: linear-gradient(135deg, #AF52DE, #BF5AF2);
+        }
+
+        .ico-teal {
+            background: linear-gradient(135deg, #5AC8FA, #64D2FF);
+        }
+
+        .ico-pink {
+            background: linear-gradient(135deg, #FF2D55, #FF6B9D);
+        }
+
+        .ico-cyan {
+            background: linear-gradient(135deg, #32ADE6, #5AC8FA);
+        }
 
         .card-label {
             font-size: 0.75rem;
@@ -568,23 +745,11 @@
             letter-spacing: 0.05em;
         }
 
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.02em;
-            margin-bottom: 16px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ==========================================
-           STATUS DISPLAY
-           ========================================== */
-        .status-display {
+        /* Status chip */
+        .status-row {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 16px;
             position: relative;
             z-index: 1;
@@ -597,50 +762,59 @@
             flex-shrink: 0;
         }
 
-        .status-dot.approved {
-            background: var(--system-green);
+        .dot-green {
+            background: var(--apple-green);
             box-shadow: 0 0 12px rgba(52, 199, 89, 0.5);
         }
 
-        .status-dot.pending {
-            background: var(--system-yellow);
-            box-shadow: 0 0 12px rgba(255, 204, 0, 0.5);
-        }
-
-        .status-dot.in-progress {
-            background: var(--system-blue);
+        .dot-blue {
+            background: var(--apple-blue);
             box-shadow: 0 0 12px rgba(0, 122, 255, 0.5);
         }
 
-        .status-dot.not-started {
+        .dot-yellow {
+            background: var(--apple-yellow);
+            box-shadow: 0 0 12px rgba(255, 204, 0, 0.5);
+        }
+
+        .dot-gray {
             background: var(--text-tertiary);
         }
 
-        .status-text {
+        .status-label {
             font-size: 1.5rem;
             font-weight: 700;
             letter-spacing: -0.02em;
         }
 
-        .status-text.approved { color: #1a8f3c; }
-        .status-text.pending { color: #b45309; }
-        .status-text.in-progress { color: var(--system-blue); }
-        .status-text.not-started { color: var(--text-tertiary); }
-
-        /* Large card status */
-        .card-large .status-text {
+        .card-wide .status-label {
             font-size: 2rem;
         }
 
-        /* ==========================================
-           CARD DETAILS
-           ========================================== */
-        .card-details {
-            position: relative;
-            z-index: 1;
+        .st-green {
+            color: #1a8f3c;
         }
 
-        .detail-row {
+        .st-blue {
+            color: var(--apple-blue);
+        }
+
+        .st-yellow {
+            color: #b45309;
+        }
+
+        .st-gray {
+            color: var(--text-tertiary);
+        }
+
+        /* Detail rows */
+        .card-body {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .info-row {
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
@@ -648,36 +822,34 @@
             font-size: 0.9rem;
         }
 
-        .detail-row:last-child {
+        .info-row:last-child {
             border-bottom: none;
         }
 
-        .detail-label {
+        .info-key {
             color: var(--text-secondary);
         }
 
-        .detail-value {
+        .info-val {
             font-weight: 600;
             color: var(--text-primary);
         }
 
-        /* ==========================================
-           PROGRESS STEPS
-           ========================================== */
-        .progress-section {
+        /* Progress steps */
+        .step-track {
             margin-top: auto;
-            padding-top: 20px;
+            padding-top: 18px;
             position: relative;
             z-index: 1;
         }
 
-        .progress-track {
+        .step-bar {
             display: flex;
             gap: 4px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
-        .progress-segment {
+        .step-seg {
             flex: 1;
             height: 5px;
             background: rgba(0, 0, 0, 0.08);
@@ -685,58 +857,55 @@
             transition: all 0.4s ease;
         }
 
-        .progress-segment.done {
-            background: var(--system-blue);
+        .step-seg.done {
+            background: var(--apple-blue);
         }
 
-        .progress-segment.current {
-            background: var(--system-yellow);
+        .step-seg.now {
+            background: var(--apple-yellow);
         }
 
-        .progress-segment.current.approved {
-            background: var(--system-green);
+        .step-seg.now.complete {
+            background: var(--apple-green);
         }
 
-        .progress-labels {
+        .step-labels {
             display: flex;
             justify-content: space-between;
         }
 
-        .progress-label {
+        .step-lbl {
             font-size: 0.65rem;
             color: var(--text-tertiary);
             text-align: center;
             flex: 1;
         }
 
-        .progress-label.active {
+        .step-lbl.active {
             color: var(--text-primary);
             font-weight: 600;
         }
 
         /* ==========================================
-           SUMMARY CARD - Minimal Modern Design
+           SUMMARY / ACTIONS CARD
            ========================================== */
-        .summary-section {
+        .summary-wrap {
             margin-top: 32px;
         }
 
-        .summary-card {
+        .summary-glass {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-radius: var(--radius-lg);
-            padding: 0;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: var(--r-lg);
             border: 1px solid var(--glass-border);
-            box-shadow: 
-                var(--glass-shadow),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
-            animation: fadeSlideUp 0.6s ease 0.5s forwards;
-            opacity: 0;
+            box-shadow: var(--glass-shadow), var(--glass-inset);
             overflow: hidden;
+            animation: fadeUp 0.6s ease 0.5s forwards;
+            opacity: 0;
         }
 
-        .summary-header {
+        .summary-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -744,17 +913,16 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.06);
         }
 
-        .summary-title {
+        .summary-top h3 {
             font-size: 1.125rem;
             font-weight: 600;
-            color: var(--text-primary);
             letter-spacing: -0.01em;
         }
 
-        .contact-btn {
-            background: var(--system-blue);
+        .contact-pill {
+            background: var(--apple-blue);
             border: none;
-            border-radius: var(--radius-pill);
+            border-radius: var(--r-pill);
             padding: 10px 20px;
             font-size: 0.875rem;
             font-weight: 600;
@@ -768,92 +936,67 @@
             box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
         }
 
-        .contact-btn:hover {
+        .contact-pill:hover {
             background: #0066DD;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
         }
 
-        .contact-btn:active {
-            transform: translateY(0) scale(0.98);
-        }
-
-        .contact-btn svg {
+        .contact-pill svg {
             width: 16px;
             height: 16px;
         }
 
-        /* Action List - Clean Table Style */
+        /* Action rows */
         .action-list {
             display: flex;
             flex-direction: column;
         }
 
-        /* Action Item - Simple Row */
-        .action-item {
+        .action-row {
             display: flex;
             align-items: center;
             gap: 16px;
             padding: 18px 28px;
-            background: transparent;
             border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-            transition: all 0.2s ease;
+            transition: background 0.2s ease;
             cursor: pointer;
         }
 
-        .action-item:last-child {
+        .action-row:last-child {
             border-bottom: none;
         }
 
-        .action-item:hover {
+        .action-row:hover {
             background: rgba(255, 255, 255, 0.5);
         }
 
-        /* Status Indicator - Colored Dot */
-        .status-indicator {
+        .action-dot {
             width: 10px;
             height: 10px;
             border-radius: 50%;
             flex-shrink: 0;
         }
 
-        .status-indicator.pending,
-        .status-indicator.in-progress {
-            background: var(--system-yellow);
-            box-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
-        }
-
-        .status-indicator.not-started {
-            background: #d1d5db;
-        }
-
-        .status-indicator.success {
-            background: var(--system-green);
-            box-shadow: 0 0 8px rgba(52, 199, 89, 0.5);
-        }
-
-        /* Action Content */
-        .action-content {
+        .action-body {
             flex: 1;
             min-width: 0;
         }
 
-        .action-content h4 {
+        .action-body h4 {
             font-size: 0.9375rem;
             font-weight: 600;
-            color: var(--text-primary);
             margin-bottom: 2px;
         }
 
-        .action-content p {
+        .action-body p {
             font-size: 0.8125rem;
             color: var(--text-secondary);
         }
 
-        /* Status Badge */
-        .status-badge {
+        .action-badge {
             padding: 6px 12px;
-            border-radius: var(--radius-pill);
+            border-radius: var(--r-pill);
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -861,164 +1004,233 @@
             flex-shrink: 0;
         }
 
-        .status-badge.pending,
-        .status-badge.in-progress {
+        .badge-progress {
+            background: rgba(0, 122, 255, 0.12);
+            color: #1d4ed8;
+        }
+
+        .badge-pending {
             background: rgba(255, 204, 0, 0.15);
             color: #92600a;
         }
 
-        .status-badge.not-started {
+        .badge-not-started {
             background: rgba(0, 0, 0, 0.05);
             color: var(--text-tertiary);
         }
 
-        .status-badge.success {
-            background: rgba(52, 199, 89, 0.15);
-            color: #1a7f37;
-        }
-
-        /* Action Arrow */
-        .action-arrow {
+        .action-chevron {
             color: var(--text-tertiary);
             transition: all 0.2s ease;
+            flex-shrink: 0;
         }
 
-        .action-item:hover .action-arrow {
-            color: var(--system-blue);
-            transform: translateX(4px);
+        .action-row:hover .action-chevron {
+            color: var(--apple-blue);
+            transform: translateX(3px);
         }
 
-        .action-arrow svg {
-            width: 18px;
-            height: 18px;
+        .action-chevron svg {
+            width: 16px;
+            height: 16px;
         }
 
-        /* Empty State */
-        .action-item.success-all {
-            padding: 32px 28px;
-            justify-content: center;
+        /* All done state */
+        .all-done {
+            padding: 36px 28px;
             text-align: center;
+            display: flex;
             flex-direction: column;
+            align-items: center;
             gap: 12px;
         }
 
-        .success-icon {
+        .done-icon {
             width: 56px;
             height: 56px;
-            background: linear-gradient(135deg, rgba(52, 199, 89, 0.15), rgba(48, 219, 91, 0.1));
+            background: linear-gradient(135deg, rgba(52, 199, 89, 0.12), rgba(48, 219, 91, 0.06));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--system-green);
-            margin: 0 auto;
+            color: var(--apple-green);
         }
 
-        .success-icon svg {
+        .done-icon svg {
             width: 28px;
             height: 28px;
         }
 
-        .action-item.success-all h4 {
+        .all-done h4 {
             font-size: 1.125rem;
-            margin-bottom: 4px;
+            font-weight: 700;
         }
 
-        .action-item.success-all p {
+        .all-done p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
             max-width: 300px;
-            margin: 0 auto;
         }
 
-        /* Responsive */
+        /* ==========================================
+           RESPONSIVE
+           ========================================== */
+        @media (max-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card-wide {
+                grid-column: span 2;
+            }
+        }
+
         @media (max-width: 640px) {
-            .summary-header {
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-wide {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+
+            .search-box {
                 flex-direction: column;
-                gap: 16px;
+            }
+
+            .teacher-hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 28px 24px;
+            }
+
+            .meta-tags {
+                justify-content: center;
+            }
+
+            .progress-ring-wrap {
+                margin-top: 8px;
+            }
+
+            .summary-top {
+                flex-direction: column;
+                gap: 14px;
                 align-items: flex-start;
             }
 
-            .action-item {
-                padding: 16px 20px;
-            }
-
-            .status-badge {
+            .action-badge {
                 display: none;
             }
+
+            .action-row {
+                padding: 14px 20px;
+            }
+        }
+
+        /* ==========================================
+           POWERED BY FOOTER
+           ========================================== */
+        .footer-note {
+            text-align: center;
+            padding: 32px 24px 48px;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        .footer-note a {
+            color: var(--apple-blue);
+            text-decoration: none;
         }
     </style>
 </head>
+
 <body>
-    <!-- Animated Background -->
-    <div class="bg-animation">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
+    <!-- Background Orbs -->
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
     </div>
 
     <main class="main-content">
-        <!-- Search Section - Centered -->
+        <!-- Search Section -->
         <section class="search-section" id="searchSection">
+            <div class="logo-mark">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                    <polyline points="14,2 14,8 20,8" />
+                    <path d="m9 15 2 2 4-4" />
+                </svg>
+            </div>
             <h1 class="search-title">Status Tracker</h1>
-            <p class="search-subtitle">Track your documents in real-time</p>
+            <p class="search-subtitle">Track your visa & work permit documents in real-time</p>
             <div class="search-box">
                 <input type="text" class="search-input" id="passportInput" placeholder="Enter Passport Number...">
-                <button class="search-btn" onclick="searchStatus()">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    Check
+                <button class="search-btn" id="searchBtn" onclick="searchStatus()">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.35-4.35" />
+                    </svg>
+                    Search
                 </button>
             </div>
         </section>
 
         <!-- Loading -->
         <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>Loading your status...</p>
+            <div class="spinner-wrap">
+                <div class="spinner-ring"></div>
+            </div>
+            <p>Fetching your status...</p>
         </div>
 
         <!-- Error -->
         <div class="error-message" id="errorMessage">
             <div class="error-icon">
-                <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
+                <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="m15 9-6 6M9 9l6 6" />
+                </svg>
             </div>
             <h3>Not Found</h3>
-            <p>No records found for this passport number</p>
+            <p id="errorText">No records found for this passport number</p>
+            <button class="retry-btn" onclick="resetSearch()">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                    <path d="M21 3v5h-5" />
+                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                    <path d="M3 21v-5h5" />
+                </svg>
+                Try Again
+            </button>
         </div>
 
         <!-- Results Section -->
         <section class="results-section" id="resultsSection">
-            <!-- Teacher Card -->
-            <div class="teacher-card">
-                <div class="teacher-avatar" id="teacherInitial">JS</div>
-                <div class="teacher-info">
-                    <h2 id="teacherName">John Smith</h2>
-                    <p class="teacher-school" id="teacherSchool">ABC International School</p>
-                    <div class="teacher-tags">
-                        <span class="teacher-tag" id="tagArea">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                            <span>Bangkok</span>
-                        </span>
-                        <span class="teacher-tag" id="tagPassport">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
-                            <span>AB1234567</span>
-                        </span>
-                        <span class="teacher-tag" id="tagVisa">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14,2 14,8 20,8"/></svg>
-                            <span>Non-B Visa</span>
-                        </span>
-                    </div>
+            <div class="teacher-hero" id="teacherHero">
+                <div class="avatar" id="avatar">JS</div>
+                <div class="teacher-details">
+                    <h2 id="heroName">John Smith</h2>
+                    <p class="teacher-school" id="heroSchool">ABC International School</p>
+                    <div class="meta-tags" id="heroMeta"></div>
                 </div>
+                <div class="progress-ring-wrap" id="progressRing"></div>
             </div>
 
-            <!-- Bento Grid -->
             <div class="bento-grid" id="bentoGrid"></div>
 
-            <!-- Summary -->
-            <div class="summary-section">
-                <div class="summary-card">
-                    <div class="summary-header">
-                        <h3 class="summary-title">Summary & Next Steps</h3>
-                        <button class="contact-btn" onclick="window.location.href='mailto:support@mediakidsacademy.com'">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <div class="summary-wrap">
+                <div class="summary-glass">
+                    <div class="summary-top">
+                        <h3>Summary & Next Steps</h3>
+                        <button class="contact-pill"
+                            onclick="window.location.href='mailto:support@mediakidsacademy.com'">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <rect width="20" height="16" x="2" y="4" rx="2" />
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                            </svg>
                             Contact Support
                         </button>
                     </div>
@@ -1026,295 +1238,361 @@
                 </div>
             </div>
         </section>
+
+        <div class="footer-note" id="footer" style="display:none;">
+            Powered by <a href="#">MediaKids Academy</a> · Data updates every ~5 minutes
+        </div>
     </main>
 
     <script>
         // ==========================================
-        // SVG ICONS
+        // CONFIG
         // ==========================================
-        const icons = {
-            'passport': '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M7 20v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2"/></svg>',
-            'briefcase': '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
-            'award': '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>',
-            'shield-check': '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
-            'heart-pulse': '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>',
-            'receipt': '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M14 8H8M16 12H8M13 16H8"/></svg>',
-            'landmark': '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>',
-            'clock': '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
-            'check-circle': '<svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
-            'alert-circle': '<svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>'
+        // 🔧 Replace with your published Google Sheet CSV URL
+        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/131RHPanuhMnNUs1ZbwDQbUrIU0NORwZFZc6DnMQzbU4/gviz/tq?tqx=out:csv&sheet=Tracker';
+
+        // Set to true to use demo data (for testing without Google Sheet)
+        const USE_DEMO = SHEET_CSV_URL.includes('YOUR_GOOGLE');
+
+        // ==========================================
+        // COLUMN MAPPING (matches StatusTracker_Template.xlsx → Tracker sheet)
+        // ==========================================
+        const C = {
+            AREA: 0, SCHOOL: 1, NAME: 2, PASSPORT: 3, VISA_TYPE: 4,
+            // Visa
+            V_PROC: 5, V_EXP: 6, V_EXPECT: 7, V_STATUS: 8,
+            // Criminal
+            CR_PROC: 9, CR_EXPECT: 10, CR_STATUS: 11,
+            // Krusapa
+            K_PROC: 12, K_ID: 13, K_EXP: 14, K_EXPECT: 15, K_STATUS: 16,
+            // Work Permit
+            W_PROC: 17, W_ID: 18, W_EXP: 19, W_EXPECT: 20, W_STATUS: 21,
+            // Medical
+            M_PROC: 22, M_EXPECT: 23, M_STATUS: 24,
+            // Tax
+            T_PROC: 25, T_EXPECT: 26, T_STATUS: 27,
+            // Bank
+            B_PROC: 28, B_EXPECT: 29, B_STATUS: 30,
+            // Visa Extension
+            X_PROC: 31, X_EXPECT: 32, X_STATUS: 33,
+            // Overall
+            OVERALL: 34,
         };
 
         // ==========================================
-        // DEMO DATA
+        // ICONS (SVG)
         // ==========================================
-        const DEMO_DATA = [
+        const ico = {
+            passport: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M7 20v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2"/></svg>',
+            briefcase: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+            award: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>',
+            shield: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
+            heart: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>',
+            receipt: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M14 8H8M16 12H8M13 16H8"/></svg>',
+            landmark: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>',
+            clock: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+            check: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+            chevron: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>',
+            pin: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
+            id: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>',
+            file: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14,2 14,8 20,8"/></svg>',
+        };
+
+        // ==========================================
+        // CARD CONFIGS
+        // ==========================================
+        const CARDS = [
+            { key: 'visa', title: 'Visa', icon: 'passport', color: 'ico-blue', size: 'card-wide' },
+            { key: 'criminal', title: 'Criminal Check', icon: 'shield', color: 'ico-orange', size: '' },
+            { key: 'krusapa', title: 'Krusapa License', icon: 'award', color: 'ico-green', size: '' },
+            { key: 'workPermit', title: 'Work Permit', icon: 'briefcase', color: 'ico-purple', size: '' },
+            { key: 'visaExt', title: 'Visa Extension', icon: 'clock', color: 'ico-red', size: '' },
+            { key: 'medical', title: 'Medical Certificate', icon: 'heart', color: 'ico-pink', size: '' },
+            { key: 'tax', title: 'Tax ID', icon: 'receipt', color: 'ico-teal', size: '' },
+            { key: 'bank', title: 'Bank Account', icon: 'landmark', color: 'ico-cyan', size: '' },
+        ];
+
+        // ==========================================
+        // STEP MAPS (Procedure → step number)
+        // ==========================================
+        const STEP_MAP = {
+            visa: { 'Applied': 1, 'Under Review': 2, 'Approved': 3, 'Collected': 4 },
+            criminal: { 'Requested': 1, 'Processing': 2, 'Completed': 3 },
+            krusapa: { 'Applied': 1, 'Verifying': 2, 'Committee Review': 3, 'Approved': 4, 'Issued': 5 },
+            workPermit: { 'Applied': 1, 'Under Review': 2, 'Pending Approval': 3, 'Approved': 4 },
+            medical: { 'Booked': 1, 'Examined': 2, 'Completed': 3 },
+            tax: { 'Applied': 1, 'Processing': 2, 'Issued': 3 },
+            bank: { 'Applied': 1, 'Completed': 2 },
+            visaExt: { 'Applied': 1, 'Under Review': 2, 'Approved': 3 },
+        };
+
+        const STEP_LABELS = {
+            visa: ['Apply', 'Review', 'Approved', 'Collect'],
+            criminal: ['Request', 'Process', 'Done'],
+            krusapa: ['Apply', 'Verify', 'Committee', 'Approve', 'Issue'],
+            workPermit: ['Apply', 'Review', 'Pending', 'Done'],
+            medical: ['Book', 'Exam', 'Done'],
+            tax: ['Apply', 'Process', 'Issue'],
+            bank: ['Apply', 'Done'],
+            visaExt: ['Apply', 'Review', 'Approved'],
+        };
+
+        // ==========================================
+        // DEMO DATA (used when SHEET_CSV_URL not set)
+        // ==========================================
+        const DEMO = [
             {
-                area: "Bangkok",
-                school: "ABC International School",
-                name: "John Smith",
-                passportNo: "AB1234567",
-                visaType: "Non-B",
-                visa: {
-                    status: "Approved",
-                    expireDate: "Oct 12, 2027",
-                    nextStep: "Collect Passport",
-                    currentStep: 3,
-                    steps: ["Apply", "Review", "Approved", "Collect"]
-                },
-                workPermit: {
-                    status: "Pending",
-                    expireDate: "Dec 31, 2024",
-                    waitingFor: "Labor Dept. Approval",
-                    currentStep: 3,
-                    steps: ["Apply", "Review", "Pending", "Done"]
-                },
-                criminalCheck: {
-                    status: "Completed",
-                    currentStep: 3,
-                    steps: ["Request", "Process", "Done"]
-                },
-                krusapa: {
-                    status: "In Progress",
-                    id: "KS-2024-001",
-                    expireDate: "Dec 31, 2026",
-                    currentStep: 2,
-                    steps: ["Apply", "Verify", "Approve", "Issue"]
-                },
-                medical: {
-                    status: "Completed",
-                    currentStep: 3,
-                    steps: ["Book", "Exam", "Done"]
-                },
-                tax: {
-                    status: "In Progress",
-                    waitingFor: "Revenue Dept.",
-                    currentStep: 2,
-                    steps: ["Apply", "Process", "Issue"]
-                },
-                bank: {
-                    status: "Not Started",
-                    waitingFor: "Need Work Permit",
-                    currentStep: 0,
-                    steps: ["WP", "Apply", "Done"]
-                },
-                visaExtension: {
-                    status: "Not Required",
-                    currentStep: 0,
-                    steps: ["-"]
-                }
+                area: 'กรุงเทพมหานคร', school: 'ABC International School', name: 'John Smith',
+                passportNo: 'AB1234567', visaType: 'Non-B',
+                visa: { status: 'Approved', procedure: 'Approved', expireDate: '12/10/2027', expected: '15/09/2024' },
+                criminal: { status: 'Completed', procedure: 'Completed', expected: '01/08/2024' },
+                krusapa: { status: 'In Progress', procedure: 'Committee Review', id: 'KS-2024-001', expireDate: '31/12/2026', expected: '30/11/2024' },
+                workPermit: { status: 'Pending', procedure: 'Pending Approval', id: 'WP-2024-001', expireDate: '31/12/2024', expected: '15/12/2024' },
+                medical: { status: 'Completed', procedure: 'Completed', expected: '01/07/2024' },
+                tax: { status: 'In Progress', procedure: 'Processing', expected: '30/11/2024' },
+                bank: { status: 'Not Started', procedure: 'Not Started', expected: '' },
+                visaExt: { status: 'Not Required', procedure: 'Not Required', expected: '' },
+                overall: '5/8'
             },
             {
-                area: "Chiang Mai",
-                school: "Learning Center",
-                name: "Sarah Johnson",
-                passportNo: "CD7891234",
-                visaType: "Non-B",
-                visa: {
-                    status: "In Progress",
-                    expireDate: "Aug 15, 2025",
-                    waitingFor: "Embassy Review",
-                    currentStep: 2,
-                    steps: ["Apply", "Review", "Approved", "Collect"]
-                },
-                workPermit: {
-                    status: "Not Started",
-                    waitingFor: "Visa Required",
-                    currentStep: 0,
-                    steps: ["Visa", "Apply", "Review", "Done"]
-                },
-                criminalCheck: {
-                    status: "Completed",
-                    currentStep: 3,
-                    steps: ["Request", "Process", "Done"]
-                },
-                krusapa: {
-                    status: "Pending",
-                    id: "KS-2024-002",
-                    expireDate: "Aug 15, 2026",
-                    currentStep: 3,
-                    steps: ["Apply", "Review", "Committee", "Issue"]
-                },
-                medical: {
-                    status: "Completed",
-                    currentStep: 3,
-                    steps: ["Book", "Exam", "Done"]
-                },
-                tax: {
-                    status: "Not Started",
-                    currentStep: 0,
-                    steps: ["WP", "Apply", "Issue"]
-                },
-                bank: {
-                    status: "Not Started",
-                    currentStep: 0,
-                    steps: ["WP", "Apply", "Done"]
-                },
-                visaExtension: {
-                    status: "Not Required",
-                    currentStep: 0,
-                    steps: ["-"]
-                }
+                area: 'เชียงใหม่', school: 'Learning Center', name: 'Sarah Johnson',
+                passportNo: 'CD7891234', visaType: 'Non-B',
+                visa: { status: 'In Progress', procedure: 'Under Review', expireDate: '15/08/2025', expected: '01/10/2024' },
+                criminal: { status: 'Completed', procedure: 'Completed', expected: '15/07/2024' },
+                krusapa: { status: 'Completed', procedure: 'Issued', id: 'KS-2024-002', expireDate: '15/08/2026', expected: '' },
+                workPermit: { status: 'Not Started', procedure: 'Not Started', id: '', expireDate: '', expected: '01/01/2025' },
+                medical: { status: 'Completed', procedure: 'Completed', expected: '01/06/2024' },
+                tax: { status: 'Not Started', procedure: 'Not Started', expected: '' },
+                bank: { status: 'Not Started', procedure: 'Not Started', expected: '' },
+                visaExt: { status: 'Not Required', procedure: 'Not Required', expected: '' },
+                overall: '3/8'
             }
         ];
 
         // ==========================================
-        // CARD CONFIG
+        // CSV PARSER
         // ==========================================
-        const cardConfigs = [
-            { key: 'visa', title: 'Visa Status', icon: 'passport', color: 'blue', size: 'card-large' },
-            { key: 'workPermit', title: 'Work Permit', icon: 'briefcase', color: 'purple', size: 'card-medium' },
-            { key: 'krusapa', title: 'Krusapa License', icon: 'award', color: 'green', size: 'card-small' },
-            { key: 'criminalCheck', title: 'Criminal Check', icon: 'shield-check', color: 'orange', size: 'card-small' },
-            { key: 'medical', title: 'Medical Certificate', icon: 'heart-pulse', color: 'pink', size: 'card-small' },
-            { key: 'tax', title: 'Tax ID', icon: 'receipt', color: 'teal', size: 'card-small' },
-            { key: 'bank', title: 'Bank Account', icon: 'landmark', color: 'cyan', size: 'card-small' },
-            { key: 'visaExtension', title: 'Visa Extension', icon: 'clock', color: 'red', size: 'card-small' }
-        ];
-
-        // ==========================================
-        // HELPERS
-        // ==========================================
-        function getStatusClass(status) {
-            const s = status.toLowerCase();
-            if (s.includes('approved') || s.includes('completed') || s.includes('done')) return 'approved';
-            if (s.includes('pending')) return 'pending';
-            if (s.includes('in progress') || s.includes('processing')) return 'in-progress';
-            if (s.includes('not required')) return 'approved';
-            return 'not-started';
-        }
-
-        function getInitials(name) {
-            return name.split(' ').map(n => n[0]).join('').substring(0, 2);
-        }
-
-        // ==========================================
-        // RENDER CARD
-        // ==========================================
-        function renderCard(config, data) {
-            const statusClass = getStatusClass(data.status);
-            
-            // Progress
-            let progressHtml = '';
-            if (data.steps && data.steps.length > 1 && data.steps[0] !== '-') {
-                let segments = '';
-                let labels = '';
-                
-                data.steps.forEach((step, i) => {
-                    const stepNum = i + 1;
-                    let segClass = 'progress-segment';
-                    let labelClass = 'progress-label';
-                    
-                    if (stepNum < data.currentStep) {
-                        segClass += ' done';
-                    } else if (stepNum === data.currentStep) {
-                        segClass += ' current';
-                        if (statusClass === 'approved') segClass += ' approved';
-                        labelClass += ' active';
-                    }
-                    
-                    segments += `<div class="${segClass}"></div>`;
-                    labels += `<span class="${labelClass}">${step}</span>`;
-                });
-
-                progressHtml = `
-                    <div class="progress-section">
-                        <div class="progress-track">${segments}</div>
-                        <div class="progress-labels">${labels}</div>
-                    </div>
-                `;
+        function parseCSVLine(line) {
+            const r = []; let cur = '', inQ = false;
+            for (let i = 0; i < line.length; i++) {
+                const ch = line[i];
+                if (ch === '"') inQ = !inQ;
+                else if (ch === ',' && !inQ) { r.push(cur.trim()); cur = ''; }
+                else cur += ch;
             }
+            r.push(cur.trim());
+            return r;
+        }
+
+        function parseSheetData(csv) {
+            const lines = csv.split('\n');
+            const results = [];
+
+            // Skip 1 header row (row 0 = headers, row 1+ = data)
+            for (let i = 1; i < lines.length; i++) {
+                const col = parseCSVLine(lines[i]);
+                if (!col[C.PASSPORT]) continue; // Only require passport
+
+                const row = {
+                    area: col[C.AREA] || '',
+                    school: col[C.SCHOOL] || '',
+                    name: col[C.NAME] || '',
+                    passportNo: col[C.PASSPORT] || '',
+                    visaType: col[C.VISA_TYPE] || '',
+                    visa: {
+                        status: col[C.V_STATUS] || 'Not Started',
+                        procedure: col[C.V_PROC] || '',
+                        expireDate: col[C.V_EXP] || '',
+                        expected: col[C.V_EXPECT] || '',
+                    },
+                    criminal: {
+                        status: col[C.CR_STATUS] || 'Not Started',
+                        procedure: col[C.CR_PROC] || '',
+                        expected: col[C.CR_EXPECT] || '',
+                    },
+                    krusapa: {
+                        status: col[C.K_STATUS] || 'Not Started',
+                        procedure: col[C.K_PROC] || '',
+                        id: col[C.K_ID] || '',
+                        expireDate: col[C.K_EXP] || '',
+                        expected: col[C.K_EXPECT] || '',
+                    },
+                    workPermit: {
+                        status: col[C.W_STATUS] || 'Not Started',
+                        procedure: col[C.W_PROC] || '',
+                        id: col[C.W_ID] || '',
+                        expireDate: col[C.W_EXP] || '',
+                        expected: col[C.W_EXPECT] || '',
+                    },
+                    medical: {
+                        status: col[C.M_STATUS] || 'Not Started',
+                        procedure: col[C.M_PROC] || '',
+                        expected: col[C.M_EXPECT] || '',
+                    },
+                    tax: {
+                        status: col[C.T_STATUS] || 'Not Started',
+                        procedure: col[C.T_PROC] || '',
+                        expected: col[C.T_EXPECT] || '',
+                    },
+                    bank: {
+                        status: col[C.B_STATUS] || 'Not Started',
+                        procedure: col[C.B_PROC] || '',
+                        expected: col[C.B_EXPECT] || '',
+                    },
+                    visaExt: {
+                        status: col[C.X_STATUS] || 'Not Started',
+                        procedure: col[C.X_PROC] || '',
+                        expected: col[C.X_EXPECT] || '',
+                    },
+                    overall: col[C.OVERALL] || '0/0',
+                };
+                results.push(row);
+            }
+            return results;
+        }
+
+        // ==========================================
+        // STATUS HELPERS
+        // ==========================================
+        function statusClass(s) {
+            const t = (s || '').toLowerCase();
+            if (t.includes('approved') || t.includes('completed') || t.includes('not required')) return 'green';
+            if (t.includes('pending')) return 'yellow';
+            if (t.includes('in progress') || t.includes('processing')) return 'blue';
+            return 'gray';
+        }
+
+        function getStep(key, proc) {
+            if (!proc || proc === 'Not Started' || proc === 'Not Required') return 0;
+            return STEP_MAP[key]?.[proc] || 0;
+        }
+
+        function initials(name) {
+            return name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+        }
+
+        // ==========================================
+        // RENDER: BENTO CARD
+        // ==========================================
+        function renderCard(cfg, data) {
+            const sc = statusClass(data.status);
+            const step = getStep(cfg.key, data.procedure);
+            const labels = STEP_LABELS[cfg.key] || [];
+            const total = labels.length;
 
             // Details
-            let detailsHtml = '';
+            let details = '';
+            if (data.procedure && data.procedure !== 'Not Started' && data.procedure !== 'Not Required') {
+                details += `<div class="info-row"><span class="info-key">Step</span><span class="info-val">${data.procedure}</span></div>`;
+            }
             if (data.expireDate) {
-                detailsHtml += `<div class="detail-row"><span class="detail-label">Expires</span><span class="detail-value">${data.expireDate}</span></div>`;
+                details += `<div class="info-row"><span class="info-key">Expires</span><span class="info-val">${data.expireDate}</span></div>`;
             }
-            if (data.nextStep) {
-                detailsHtml += `<div class="detail-row"><span class="detail-label">Next Step</span><span class="detail-value">${data.nextStep}</span></div>`;
-            }
-            if (data.waitingFor && statusClass !== 'approved') {
-                detailsHtml += `<div class="detail-row"><span class="detail-label">Waiting for</span><span class="detail-value">${data.waitingFor}</span></div>`;
+            if (data.expected) {
+                details += `<div class="info-row"><span class="info-key">Expected</span><span class="info-val">${data.expected}</span></div>`;
             }
             if (data.id) {
-                detailsHtml += `<div class="detail-row"><span class="detail-label">ID</span><span class="detail-value">${data.id}</span></div>`;
+                details += `<div class="info-row"><span class="info-key">ID</span><span class="info-val">${data.id}</span></div>`;
+            }
+
+            // Progress
+            let stepHtml = '';
+            if (total > 1) {
+                let segs = '', lbls = '';
+                for (let i = 0; i < total; i++) {
+                    let cls = 'step-seg';
+                    let lCls = 'step-lbl';
+                    if (i + 1 < step) cls += ' done';
+                    else if (i + 1 === step) {
+                        cls += ' now';
+                        if (sc === 'green') cls += ' complete';
+                        lCls += ' active';
+                    }
+                    segs += `<div class="${cls}"></div>`;
+                    lbls += `<span class="${lCls}">${labels[i]}</span>`;
+                }
+                stepHtml = `<div class="step-track"><div class="step-bar">${segs}</div><div class="step-labels">${lbls}</div></div>`;
             }
 
             return `
-                <article class="glass-card ${config.size}">
-                    <div class="card-header">
-                        <div class="card-icon ${config.color}">${icons[config.icon] || ''}</div>
-                        <span class="card-label">${config.title}</span>
+                <article class="glass-card ${cfg.size}">
+                    <div class="card-head">
+                        <div class="card-ico ${cfg.color}">${ico[cfg.icon]}</div>
+                        <span class="card-label">${cfg.title}</span>
                     </div>
-                    <div class="status-display">
-                        <div class="status-dot ${statusClass}"></div>
-                        <span class="status-text ${statusClass}">${data.status}</span>
+                    <div class="status-row">
+                        <div class="status-dot dot-${sc}"></div>
+                        <span class="status-label st-${sc}">${data.status}</span>
                     </div>
-                    ${detailsHtml ? `<div class="card-details">${detailsHtml}</div>` : ''}
-                    ${progressHtml}
+                    ${details ? `<div class="card-body">${details}</div>` : ''}
+                    ${stepHtml}
                 </article>
             `;
         }
 
         // ==========================================
-        // RENDER ACTIONS
+        // RENDER: PROGRESS RING
+        // ==========================================
+        function renderProgressRing(overall) {
+            const [done, total] = (overall || '0/0').split('/').map(Number);
+            const pct = total > 0 ? done / total : 0;
+            const r = 30;
+            const circ = 2 * Math.PI * r;
+            const offset = circ * (1 - pct);
+
+            return `
+                <div class="progress-ring-container">
+                    <svg width="76" height="76" viewBox="0 0 76 76">
+                        <circle class="progress-ring-bg" cx="38" cy="38" r="${r}"/>
+                        <circle class="progress-ring-fill" cx="38" cy="38" r="${r}"
+                            stroke-dasharray="${circ}"
+                            stroke-dashoffset="${offset}"/>
+                    </svg>
+                    <span class="progress-ring-text">${done}/${total}</span>
+                </div>
+                <span class="progress-ring-label">Complete</span>
+            `;
+        }
+
+        // ==========================================
+        // RENDER: ACTION LIST
         // ==========================================
         function renderActions(data) {
             const actions = [];
 
-            cardConfigs.forEach(config => {
-                const d = data[config.key];
+            CARDS.forEach(cfg => {
+                const d = data[cfg.key];
                 if (!d) return;
-                
-                const statusClass = getStatusClass(d.status);
-                
-                if (statusClass === 'pending') {
-                    actions.push({
-                        title: config.title,
-                        status: d.status,
-                        desc: d.waitingFor || d.nextStep || 'Processing...',
-                        type: 'pending'
-                    });
-                } else if (statusClass === 'in-progress') {
-                    actions.push({
-                        title: config.title,
-                        status: d.status,
-                        desc: d.waitingFor || d.nextStep || 'Processing...',
-                        type: 'in-progress'
-                    });
-                } else if (statusClass === 'not-started' && !d.status.toLowerCase().includes('not required')) {
-                    actions.push({
-                        title: config.title,
-                        status: 'Not Started',
-                        desc: d.waitingFor || 'Waiting for prerequisites',
-                        type: 'not-started'
-                    });
+                const sc = statusClass(d.status);
+
+                if (sc === 'blue') {
+                    actions.push({ title: cfg.title, status: 'In Progress', desc: d.procedure || 'Processing...', type: 'progress' });
+                } else if (sc === 'yellow') {
+                    actions.push({ title: cfg.title, status: 'Pending', desc: d.procedure || 'Waiting...', type: 'pending' });
+                } else if (sc === 'gray' && !d.status.toLowerCase().includes('not required')) {
+                    actions.push({ title: cfg.title, status: 'Not Started', desc: d.expected ? `Expected: ${d.expected}` : 'Waiting for prerequisites', type: 'not-started' });
                 }
             });
 
             if (actions.length === 0) {
                 return `
-                    <div class="action-item success-all">
-                        <div class="success-icon">${icons['check-circle']}</div>
-                        <div class="action-content">
-                            <h4>All Documents Complete</h4>
-                            <p>Great news! All your documents have been processed successfully.</p>
-                        </div>
+                    <div class="all-done">
+                        <div class="done-icon">${ico.check}</div>
+                        <h4>All Documents Complete</h4>
+                        <p>Great news! All documents have been processed successfully.</p>
                     </div>
                 `;
             }
 
             return actions.map(a => `
-                <div class="action-item">
-                    <div class="status-indicator ${a.type}"></div>
-                    <div class="action-content">
+                <div class="action-row">
+                    <div class="action-dot dot-${a.type === 'progress' ? 'blue' : a.type === 'pending' ? 'yellow' : 'gray'}"></div>
+                    <div class="action-body">
                         <h4>${a.title}</h4>
                         <p>${a.desc}</p>
                     </div>
-                    <span class="status-badge ${a.type}">${a.status}</span>
-                    <div class="action-arrow">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </div>
+                    <span class="action-badge badge-${a.type}">${a.status}</span>
+                    <div class="action-chevron">${ico.chevron}</div>
                 </div>
             `).join('');
         }
@@ -1323,26 +1601,34 @@
         // DISPLAY RESULTS
         // ==========================================
         function displayResults(data) {
-            document.getElementById('teacherInitial').textContent = getInitials(data.name);
-            document.getElementById('teacherName').textContent = data.name;
-            document.getElementById('teacherSchool').textContent = data.school;
-            document.getElementById('tagArea').querySelector('span:last-child').textContent = data.area;
-            document.getElementById('tagPassport').querySelector('span:last-child').textContent = data.passportNo;
-            document.getElementById('tagVisa').querySelector('span:last-child').textContent = `${data.visaType} Visa`;
+            // Hero card
+            document.getElementById('avatar').textContent = initials(data.name);
+            document.getElementById('heroName').textContent = data.name;
+            document.getElementById('heroSchool').textContent = data.school;
 
-            document.getElementById('bentoGrid').innerHTML = cardConfigs.map(config => {
-                const d = data[config.key];
-                if (!d) return '';
-                return renderCard(config, d);
+            document.getElementById('heroMeta').innerHTML = `
+                <span class="meta-tag">${ico.pin}<span>${data.area}</span></span>
+                <span class="meta-tag">${ico.id}<span>${data.passportNo}</span></span>
+                <span class="meta-tag">${ico.file}<span>${data.visaType} Visa</span></span>
+            `;
+
+            document.getElementById('progressRing').innerHTML = renderProgressRing(data.overall);
+
+            // Bento grid
+            document.getElementById('bentoGrid').innerHTML = CARDS.map(cfg => {
+                const d = data[cfg.key];
+                return d ? renderCard(cfg, d) : '';
             }).join('');
 
+            // Actions
             document.getElementById('actionList').innerHTML = renderActions(data);
 
-            // Update layout
-            document.getElementById('searchSection').classList.add('has-results');
+            // Layout transition
+            document.getElementById('searchSection').classList.add('compact');
             document.getElementById('loading').classList.remove('active');
             document.getElementById('errorMessage').classList.remove('active');
             document.getElementById('resultsSection').classList.add('active');
+            document.getElementById('footer').style.display = 'block';
         }
 
         // ==========================================
@@ -1350,33 +1636,71 @@
         // ==========================================
         async function searchStatus() {
             const passport = document.getElementById('passportInput').value.trim().toUpperCase();
-            
-            if (!passport) {
-                alert('Please enter passport number');
-                return;
-            }
+            if (!passport) { document.getElementById('passportInput').focus(); return; }
 
+            // Reset
             document.getElementById('resultsSection').classList.remove('active');
             document.getElementById('errorMessage').classList.remove('active');
+            document.getElementById('footer').style.display = 'none';
             document.getElementById('loading').classList.add('active');
+            document.getElementById('searchSection').classList.add('compact');
 
-            await new Promise(r => setTimeout(r, 600));
+            try {
+                let dataset;
 
-            const data = DEMO_DATA.find(d => d.passportNo.toUpperCase() === passport);
+                if (USE_DEMO) {
+                    // Demo mode
+                    console.log('🔸 Using DEMO data (SHEET_CSV_URL not configured)');
+                    await new Promise(r => setTimeout(r, 500));
+                    dataset = DEMO;
+                } else {
+                    // Fetch from Google Sheet
+                    console.log('🔗 Fetching from:', SHEET_CSV_URL);
+                    const resp = await fetch(SHEET_CSV_URL);
+                    console.log('📥 Response status:', resp.status, resp.statusText);
+                    if (!resp.ok) throw new Error('Network error: ' + resp.status);
+                    const csv = await resp.text();
+                    console.log('📄 CSV received, length:', csv.length, 'chars');
+                    console.log('📄 First 200 chars:', csv.substring(0, 200));
+                    dataset = parseSheetData(csv);
+                    console.log('✅ Parsed', dataset.length, 'records');
+                    console.log('📋 Passport numbers found:', dataset.map(d => d.passportNo));
+                }
 
-            if (data) {
-                displayResults(data);
-            } else {
+                const found = dataset.find(d => d.passportNo.toUpperCase() === passport);
+
+                if (found) {
+                    displayResults(found);
+                } else {
+                    document.getElementById('loading').classList.remove('active');
+                    document.getElementById('errorText').textContent = 'No records found for this passport number';
+                    document.getElementById('errorMessage').classList.add('active');
+                }
+            } catch (err) {
+                console.error('Fetch error:', err);
                 document.getElementById('loading').classList.remove('active');
+                document.getElementById('errorText').textContent = 'Unable to connect to database. Please try again.';
                 document.getElementById('errorMessage').classList.add('active');
             }
         }
 
+        function resetSearch() {
+            document.getElementById('errorMessage').classList.remove('active');
+            document.getElementById('resultsSection').classList.remove('active');
+            document.getElementById('searchSection').classList.remove('compact');
+            document.getElementById('footer').style.display = 'none';
+            document.getElementById('passportInput').value = '';
+            document.getElementById('passportInput').focus();
+        }
+
+        // Enter key
         document.getElementById('passportInput').addEventListener('keypress', e => {
             if (e.key === 'Enter') searchStatus();
         });
 
-        console.log('🎯 Try: AB1234567 or CD7891234');
+        // Console hint
+        console.log('🎯 Demo mode: try AB1234567 or CD7891234');
     </script>
 </body>
+
 </html>
